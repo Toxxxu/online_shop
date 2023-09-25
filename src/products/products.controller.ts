@@ -33,7 +33,7 @@ export class ProductsController {
   }
 
   @Get(':id')
-  async findUserById(
+  async findProductById(
     @Param('id', ParseUUIDPipe) id: string,
   ): Promise<GetProductResponseDto> {
     return await this.productsService.getProductById(id);
