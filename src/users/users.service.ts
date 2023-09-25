@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Injectable,
   NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 
 import { UsersRepository } from './users.repository';
@@ -31,6 +32,21 @@ export class UsersService {
     if (user) {
       throw new BadRequestException('This email already exists.');
     }
+  }
+
+  async validateUser(
+    userId: string,
+    password: string,
+  ): Promise<GetUserResponseDto> {
+    const user = await this.usersRepository.findOneById(userId);
+    if (!user) {
+      throw new NotFoundException(`User not found by id: '${userId}'.`);
+    }
+    const passwordIsValid = this.compare(user.password, password);
+    if (!passwordIsValid) {
+      throw new UnauthorizedException('Credentials are invalid');
+    }
+    return this.buildResponse(user);
   }
 
   async getUserById(userId: string): Promise<GetUserResponseDto> {
@@ -63,5 +79,9 @@ export class UsersService {
       total,
       data,
     };
+  }
+
+  private compare(password1: string, password2: string) {
+    return password1 === password2;
   }
 }
