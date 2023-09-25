@@ -74,7 +74,10 @@ export class UsersService {
     };
   }
 
-  private buildPaginationResponse(total: number, data: GetUserResponseDto[]) {
+  private buildPaginationResponse(
+    total: number,
+    data: GetUserResponseDto[],
+  ): GetUserPaginatedDto {
     return {
       total,
       data,
