@@ -13,18 +13,18 @@ export class UsersRepository {
   ) {}
 
   async create(user: CreateUserRequestDto): Promise<User> {
-    return this.usersRepository.save(user);
+    return await this.usersRepository.save(user);
   }
 
-  findOneById(id: string): Promise<User> {
-    return this.usersRepository.findOneBy({ id });
+  async findOneById(id: string): Promise<User> {
+    return await this.usersRepository.findOneBy({ id });
   }
 
-  findOneByEmail(email: string): Promise<User> {
-    return this.usersRepository.findOneBy({ email });
+  async findOneByEmail(email: string): Promise<User> {
+    return await this.usersRepository.findOneBy({ email });
   }
 
-  findAll(skip: number, take: number): Promise<[User[], total: number]> {
-    return this.usersRepository.findAndCount({ skip, take });
+  async findAll(skip: number, take: number): Promise<[User[], total: number]> {
+    return await this.usersRepository.findAndCount({ skip, take });
   }
 }

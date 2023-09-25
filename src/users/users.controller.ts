@@ -21,7 +21,7 @@ export class UsersController {
   async createUser(
     @Body() createUserRequest: CreateUserRequestDto,
   ): Promise<GetUserResponseDto> {
-    return this.usersService.createUser(createUserRequest);
+    return await this.usersService.createUser(createUserRequest);
   }
 
   @Get()
@@ -29,13 +29,13 @@ export class UsersController {
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 10,
   ): Promise<GetUserPaginatedDto> {
-    return this.usersService.getAllUsers(page, limit);
+    return await this.usersService.getAllUsers(page, limit);
   }
 
   @Get(':id')
   async findUserById(
     @Param('id', ParseUUIDPipe) id: string,
   ): Promise<GetUserResponseDto> {
-    return this.usersService.getUserById(id);
+    return await this.usersService.getUserById(id);
   }
 }
